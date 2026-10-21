@@ -1,4 +1,4 @@
-# Agent Memory Drift
+# The Agent's Epistemic Baggage
 
 An audit-oriented risk model for how agent-generated inferences can change epistemic status, gain operational authority, and influence later decisions through persistent memory.
 
