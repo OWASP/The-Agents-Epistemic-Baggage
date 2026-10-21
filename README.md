@@ -10,9 +10,9 @@ This creates a governance question:
 
 > How does the system represent and preserve the distinction between received information and agent-generated inference?
 
-If that distinction is lost, an inference can drift along two different paths: epistemic promotion that outruns its evidential support, or operational activation that exceeds its policy basis. Either failure is auditable on its own, and they compound into a more serious risk whenever a record with unearned epistemic status reaches a decision or action, whether that reach was policy-permitted or unauthorized.
+If that distinction is lost, an inference may acquire or retain a status that its evidence does not justify. Such a record may then influence decisions or actions, even through policy-permitted use. Unauthorized authority escalation or use beyond permitted authority is a separate control failure that the project also examines.
 
-This repository develops a risk model for that process, called **self-reinforcing epistemic drift**, and explores how to make it auditable. The full argument, including the memory schema, drift mechanisms, and lifecycle test protocol, is developed in [*The Agent's Epistemic Baggage*](./agents-epistemic-baggage.md). A first implementable specification, typed audit objects, transition rules, controls, metrics, and a reproducible test, is developed in [*Agent Memory Drift: Audit Operationalization v0.1*](./agent-memory-drift-operationalization-v0.1.md). If you are about to run an audit rather than read the specification cover to cover, start with the [*User Guide*](./agent-memory-drift-user-guide.md) instead.
+This repository develops a risk model for this drift process, called **self-reinforcing epistemic drift**, and explores how to make it auditable. The full argument, including the memory schema, drift mechanisms, and lifecycle test protocol, is developed in [*The Agent's Epistemic Baggage*](./agents-epistemic-baggage.md). A first implementable specification, typed audit objects, transition rules, controls, metrics, and a reproducible test, is developed in [*Agent Memory Drift: Audit Operationalization v0.1*](./agent-memory-drift-operationalization-v0.1.md). If you are about to run an audit rather than read the specification cover to cover, start with the [*User Guide*](./agent-memory-drift-user-guide.md) instead.
 
 ## Scope
 
@@ -20,7 +20,7 @@ The model applies to agentic AI systems with **writable persistent memory**, whe
 
 It focuses on the memory pathway of self-evolving agents. Changes to model weights, tools, and workflows have distinct risk profiles and are outside the current scope.
 
-This is currently a **conceptual risk model with an audit orientation**. The drift mechanisms, audit schema, and lifecycle tests form the proposed core. Full control requirements, metrics, and acceptance criteria remain open work.
+This is currently a **conceptual risk model with an audit orientation**. The drift mechanisms, audit schema, and lifecycle tests form the proposed core. An initial audit specification defines proposed control requirements, provisional metrics, and acceptance criteria. Implementation and empirical validation remain open work.
 
 ## Two drift mechanisms
 
@@ -57,7 +57,7 @@ A single status label is insufficient. An auditable memory record should keep di
 | Representation type | received input, sensor event, tool output, source claim, agent inference |
 | Provenance | source, timestamp, tool, agent, link to underlying evidence |
 | Validation state | untested, supported, contradicted, validated, rejected |
-| Temporal validity | current, stale, expired, superseded |
+| Temporal validity | current, stale, expired |
 | Evidence relation | records or sources that support or contradict the record, including the strength, independence, and quality of that support |
 | Change history | created, summarized, reclassified, superseded |
 | Epistemic transition basis | new evidence, corroboration, contradiction resolution, validated outcome |
@@ -68,9 +68,9 @@ Provenance establishes origin, not truth. A trusted source can be wrong, and an 
 
 Uncertainty should be grounded in evidence and validation state rather than relying solely on a model's self-reported confidence, which is why evidence relation also carries the strength, independence, and quality of the supporting material.
 
-Validation state and temporal validity are kept separate because a record can remain validated while becoming stale: change history logs that a record was superseded, and temporal validity reports whether it is still current.
+Validation state and temporal validity are kept separate because a record can remain validated while becoming stale. Temporal currency and superseded status are also independent: a record can remain temporally current while having been replaced by a newer version. Change history records that replacement.
 
-Epistemic transition basis and authority basis are also kept separate: the first is why a claim became more likely to be true, the second is why a record was allowed to influence a decision. A policy approval does not make a claim truer, and new evidence does not by itself grant permission to act.
+Epistemic transition basis and authority basis are also kept separate: the first is the evidential or review basis for a change in validation state, the second is why a record was allowed to influence a decision. A policy approval does not make a claim truer, and new evidence does not by itself grant permission to act.
 
 This is a logical audit schema, not a requirement that every field applies to every record type or that all records coexist in a single physical table: field applicability is conditional on representation type, and operational events can be linked to the epistemic records they consume.
 
@@ -169,8 +169,9 @@ This project operates at a complementary, record-level layer: it asks how a part
 - [x] Specify decision-lineage and logging requirements.
 - [x] Convert control points into complete audit controls.
 - [x] Define metrics and acceptance criteria (provisional, pending empirical validation).
-- [x] Build reproducible lifecycle test cases (AMD-T01 and AMD-T02, covering rejection and reactivation).
-- [x] Evaluate false promotion, correction failure, and knowledge ossification (AMD-T02's ossification check; broader evaluation still open).
+- [x] Specify reproducible lifecycle test cases (AMD-T01 and AMD-T02, covering rejection and reactivation).
+- [ ] Implement executable tests for AMD-T01 and AMD-T02.
+- [ ] Evaluate false promotion, correction failure, and knowledge ossification (AMD-T02's ossification check; broader evaluation still open).
 - [ ] Map controls to relevant AI governance and security frameworks.
 
 ## Contributing
