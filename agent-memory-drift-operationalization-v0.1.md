@@ -1,4 +1,4 @@
-# Audit Operationalization v0.1
+# The Agent's Epistemic Baggage: Audit Operationalization v0.1
 
 *A first implementable specification for auditing self-reinforcing epistemic drift in agentic AI systems with writable persistent memory.*
 
