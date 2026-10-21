@@ -1,4 +1,4 @@
-# Agent Memory Drift: User Guide
+# User Guide
 
 *A practical companion to [Agent Memory Drift: Audit Operationalization v0.1](./agent-memory-drift-operationalization-v0.1.md). Read this first if you are about to run an audit, review someone else's, or decide whether the specification applies to your system.*
 
